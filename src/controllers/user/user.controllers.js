@@ -29,9 +29,7 @@ const loginUser = expressAsyncHandler(async (req, res, next) => {
   let isMatch = await existingUser.comparePassword(password);
   if (!isMatch) return next(new ErrorHandler("Invalid Credential", 401));
   let token = await generateJWTToken(existingUser._id);
-  console.log(token);
-  console.log(process.env.JWT_COOKIE_EXPIRY);
-
+  
   res.cookie("token", token, {
     maxAge: process.env.JWT_COOKIE_EXPIRY * 60 * 60 * 1000, // Max age in 1 hour
   });
